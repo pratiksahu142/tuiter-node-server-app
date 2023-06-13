@@ -2,8 +2,10 @@ import {
   findUserByUsername,
   findUserByCredentials,
   createUser,
-  updateUser, findUserById
+  updateUser,
+  findUserById
 } from "./users-dao.js";
+var currentUserVar;
 
 const AuthController = (app) => {
 
@@ -16,6 +18,7 @@ const AuthController = (app) => {
     }
     const newUser = createUser(req.body);
     req.session["currentUser"] = newUser;
+    currentUserVar = newUser;
     res.json(newUser);
   };
 
@@ -25,8 +28,7 @@ const AuthController = (app) => {
     const user = findUserByCredentials(username, password);
     if (user) {
       req.session["currentUser"] = user;
-      console.log('@@@')
-      console.log(user)
+      currentUserVar = newUser;
       res.json(user);
     } else {
       res.sendStatus(404);
@@ -34,7 +36,7 @@ const AuthController = (app) => {
   };
 
   const profile = (req, res) => {
-    const currentUser = req.session["currentUser"];
+    const currentUser = currentUserVar;
     if (!currentUser) {
       res.sendStatus(404);
       return; }
@@ -47,11 +49,12 @@ const AuthController = (app) => {
   };
 
   const update = (req, res) => {
-    const currentUser = req.session["currentUser"];
+    const currentUser = currentUserVar;
     currentUser.firstname = req.body.firstname;
     currentUser.lastname = req.body.lastname;
 
     updateUser(currentUser);
+    currentUserVar = currentUser;
     req.session["currentUser"] = currentUser;
     res.json(currentUser);
 
