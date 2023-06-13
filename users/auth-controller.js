@@ -8,13 +8,9 @@ import {
 const AuthController = (app) => {
 
   const register = (req, res) => {
-    const username = req.body.username;
-    const user = findUserByUsername(username);
-    if (user) {
-      res.sendStatus(409);
-      return;
-    }
+
     const newUser = createUser(req.body);
+    console.log(newUser);
     req.session["currentUser"] = newUser;
     res.json(newUser);
   };
