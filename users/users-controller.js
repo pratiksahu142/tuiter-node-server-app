@@ -14,6 +14,7 @@ const findUsers = (req, res) => {
   if (type) {
     const usersOfType = users.filter(u => u.type === type)
     res.json(usersOfType)
+    return;
   }
   res.json(users)
 }
