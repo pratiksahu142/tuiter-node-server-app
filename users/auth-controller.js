@@ -53,7 +53,10 @@ const AuthController = (app) => {
   };
 
   const update = (req, res) => {
-    const currentUser = req.session["currentUser"];
+    let currentUser = req.session["currentUser"];
+    if(!currentUser && currentUserVar){
+      currentUser = currentUserVar;
+    }
     currentUser.firstname = req.body.firstname;
     currentUser.lastname = req.body.lastname;
 
