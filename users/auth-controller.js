@@ -28,7 +28,7 @@ const AuthController = (app) => {
     const user = findUserByCredentials(username, password);
     if (user) {
       req.session["currentUser"] = user;
-      currentUserVar = newUser;
+      currentUserVar = user;
       res.json(user);
     } else {
       res.sendStatus(404);
