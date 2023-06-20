@@ -12,6 +12,7 @@ const AuthController = (app) => {
     }
     const newUser = await usersDao.createUser(req.body);
     req.session["currentUser"] = newUser;
+    currentUserVar = newUser;
     res.json(newUser);
   };
 
@@ -22,7 +23,8 @@ const AuthController = (app) => {
       const user = await usersDao.findUserByCredentials(username, password);
       if (user) {
         req.session["currentUser"] = user;
-        res.json(user);
+        currentUserVar = user;
+            res.json(user);
       } else {
         res.sendStatus(403);
       }
@@ -58,7 +60,7 @@ const AuthController = (app) => {
     currentUser.firstname = req.body.firstname;
     currentUser.lastname = req.body.lastname;
 
-    updateUser(currentUser);
+    usersDao.updateUser(currentUser);
     req.session["currentUser"] = currentUser;
     currentUserVar = currentUser;
     res.json(currentUser);
