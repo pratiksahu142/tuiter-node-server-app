@@ -43,6 +43,8 @@ const AuthController = (app) => {
       }
       return;
     }
+    console.log('in profile session user  ',req.session["currentUser"]);
+    console.log('in profile current user  ',req.session["currentUser"]);
     res.json(currentUser);
   };
 
