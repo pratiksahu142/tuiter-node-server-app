@@ -24,7 +24,7 @@ const AuthController = (app) => {
       if (user) {
         req.session["currentUser"] = user;
         currentUserVar = user;
-            res.json(user);
+        res.json(user);
       } else {
         res.sendStatus(403);
       }
