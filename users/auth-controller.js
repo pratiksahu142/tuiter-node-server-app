@@ -1,7 +1,5 @@
 import * as usersDao from "./users-dao.js";
 
-var currentUserVar;
-
 const AuthController = (app) => {
 
   const register = async (req, res) => {
@@ -11,8 +9,6 @@ const AuthController = (app) => {
       return;
     }
     const newUser = await usersDao.createUser(req.body);
-    req.session["currentUser"] = newUser;
-    currentUserVar = newUser;
     res.json(newUser);
   };
 
@@ -23,7 +19,6 @@ const AuthController = (app) => {
       const user = await usersDao.findUserByCredentials(username, password);
       if (user) {
         req.session["currentUser"] = user;
-        currentUserVar = user;
         res.json(user);
       } else {
         res.sendStatus(403);
@@ -35,38 +30,21 @@ const AuthController = (app) => {
 
   const profile = (req, res) => {
     const currentUser = req.session["currentUser"];
-    if (!currentUser) {
-      if (!currentUserVar) {
-        res.sendStatus(404);
-      } else {
-        res.json(currentUserVar);
-      }
-      console.log('in profile current user  ',currentUser);
-      return;
-    }
-    console.log('in profile session user  ',req.session["currentUser"]);
     res.json(currentUser);
   };
 
   const logout = async (req, res) => {
     req.session.destroy();
-    currentUserVar = null;
     res.sendStatus(200);
   };
 
   const update = (req, res) => {
-    console.log('*** received in auth-controller')
     let currentUser = req.session["currentUser"];
-    if (!currentUser && currentUserVar) {
-      currentUser = currentUserVar;
-    }
     currentUser.firstname = req.body.firstname;
     currentUser.lastname = req.body.lastname;
 
     usersDao.updateUser(currentUser);
     req.session["currentUser"] = currentUser;
-    currentUserVar = currentUser;
-    console.log(currentUser);
     res.json(currentUser);
 
   };
