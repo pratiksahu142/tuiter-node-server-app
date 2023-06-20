@@ -7,8 +7,17 @@ const findTuits = async (req, res) => {
 
 const createTuit = async (req, res) => {
   const newTuit = req.body;
-  newTuit.likes = 0;
+  newTuit.topic = newTuit.tuit;
+  newTuit.userName = 'Tesla';
+  newTuit.title = newTuit.tuit;
+  newTuit.time = '4h'
+  newTuit.image = 'teslalogo.jpeg'
   newTuit.liked = false;
+  newTuit.replies = 123;
+  newTuit.retuits = 234;
+  newTuit.likes = 345;
+  newTuit.handle = '@tesla';
+
   const insertedTuit = await tuitsDao.createTuit(newTuit);
   res.json(insertedTuit);
 }
