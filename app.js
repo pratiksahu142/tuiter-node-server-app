@@ -13,7 +13,7 @@ mongoose.connect("mongodb+srv://pratik:vO0HCot51O1w5u8j@cluster0.5gu9nsu.mongodb
 const app = express()
 app.use(cors({
     credentials: true,
-    origin: "https://a5--celadon-crepe-ab1bc3.netlify.app"
+    origin: "https://a6--celadon-crepe-ab1bc3.netlify.app"
   })
 );
 app.use(express.json())
