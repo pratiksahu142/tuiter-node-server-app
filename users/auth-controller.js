@@ -53,6 +53,7 @@ const AuthController = (app) => {
   };
 
   const update = (req, res) => {
+    console.log('*** received in auth-controller')
     let currentUser = req.session["currentUser"];
     if (!currentUser && currentUserVar) {
       currentUser = currentUserVar;
@@ -63,6 +64,7 @@ const AuthController = (app) => {
     usersDao.updateUser(currentUser);
     req.session["currentUser"] = currentUser;
     currentUserVar = currentUser;
+    console.log(currentUser);
     res.json(currentUser);
 
   };
