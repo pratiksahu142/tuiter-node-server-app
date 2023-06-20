@@ -41,10 +41,10 @@ const AuthController = (app) => {
       } else {
         res.json(currentUserVar);
       }
+      console.log('in profile current user  ',currentUser);
       return;
     }
     console.log('in profile session user  ',req.session["currentUser"]);
-    console.log('in profile current user  ',req.session["currentUser"]);
     res.json(currentUser);
   };
 
